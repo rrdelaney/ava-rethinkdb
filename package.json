@@ -1,6 +1,6 @@
 {
   "name": "ava-rethinkdb",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "RethinkDB helpers for AVA",
   "main": "index.js",
   "scripts": {
