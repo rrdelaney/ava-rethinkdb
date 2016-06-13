@@ -1,0 +1,32 @@
+{
+  "name": "ava-rethinkdb",
+  "version": "0.0.0",
+  "description": "RethinkDB helpers for AVA",
+  "main": "index.js",
+  "scripts": {
+    "test": "snazzy && ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rrdelaney/ava-rethinkdb"
+  },
+  "keywords": [
+    "ava",
+    "rethinkdb"
+  ],
+  "author": "Ryan Delaney <rrdelaney@outlook.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rrdelaney/ava-rethinkdb/issues"
+  },
+  "homepage": "https://github.com/rrdelaney/ava-rethinkdb",
+  "devDependencies": {
+    "ava": "^0.15.2",
+    "rethinkdb": "^2.3.2",
+    "snazzy": "^4.0.0",
+    "standard": "^7.1.2"
+  },
+  "dependencies": {
+    "rimraf": "^2.5.2"
+  }
+}
