@@ -1,7 +1,7 @@
 'use strict'
 
 const { spawn } = require('child_process')
-const rimraf =require('rimraf')
+const rimraf = require('rimraf')
 
 let rethink
 
@@ -26,7 +26,7 @@ module.exports.init = initialData => t => new Promise((resolve, reject) => {
 
   function importData () {
     let conn
-    return r.connect({}).then(_ => conn = _)
+    return r.connect({}).then(_ => { conn = _ })
       .then(() => Promise.all(
         Object.keys(initialData).map(db => r.dbCreate(db).run(conn))
       ))

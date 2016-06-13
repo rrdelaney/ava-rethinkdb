@@ -63,4 +63,11 @@ test('These documents should exist', async t => {
 })
 ```
 
-# Different database instances
+# Different Database Instances
+
+This is where the magic really is. Every single test file is given its own
+RethinkDB instance. This makes it perfect for integration tests against
+endpoints, because now they can all be used in parallel! The magic comes
+from modifying the default port the driver looks at, making it different
+in each process, then spinning up a RethinkDB instance at that port.
+Check out the `test` directory for a good example.
