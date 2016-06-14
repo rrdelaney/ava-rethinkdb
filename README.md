@@ -71,3 +71,73 @@ endpoints, because now they can all be used in parallel! The magic comes
 from modifying the default port the driver looks at, making it different
 in each process, then spinning up a RethinkDB instance at that port.
 Check out the `test` directory for a good example.
+
+```js
+// app.js
+
+const express = require('express')
+const r = require('rethinkdb')
+
+let app = express()
+
+app.get('/users', (req, res) => {
+  r.connect({ db: 'app' })
+    .then(conn => r.table('users').run(conn))
+    .then(results => results.toArray())
+    .then(users => res.status(200).send({ users }))
+    .catch(e => res.status(500).send(e))
+})
+
+module.exports = { app }
+```
+
+```js
+// test/integration/users-test-1.js
+import test from 'ava'
+import request from 'supertest-as-promised'
+import { init, cleanup } from 'ava-rethinkdb'
+
+import { app } from '../../app.js'
+
+const TEST_DATA = {
+  app: {
+    users: [
+      { name: 'UserA' },
+      { name: 'UserB' }
+    ]
+  }
+}
+
+test('Users should be returned from /users', t => {
+  return request(app)
+    .get('/users')
+    .expect(200)
+})
+```
+
+```js
+// test/integration/users-test-2.js
+import test from 'ava'
+import request from 'supertest-as-promised'
+import { init, cleanup } from 'ava-rethinkdb'
+
+import { app } from '../../app.js'
+
+const TEST_DATA = {
+  app: {
+    users: [
+      { name: 'UserC' },
+      { name: 'UserD' }
+    ]
+  }
+}
+
+test('Different users should be returned from /users', t => {
+  return request(app)
+    .get('/users')
+    .expect(200)
+})
+```
+
+The `TEST_DATA` contained in each file creates a new database to be used for
+each file!
