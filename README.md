@@ -141,3 +141,8 @@ test('Different users should be returned from /users', t => {
 
 The `TEST_DATA` contained in each file creates a new database to be used for
 each file!
+
+# Debugging
+
+To view the output from all the server logs, set the environment variable
+`AVA_RETHINKDB_DEBUG=on`

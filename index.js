@@ -6,21 +6,38 @@ const rimraf = require('rimraf')
 let rethink
 
 module.exports.init = initialData => t => new Promise((resolve, reject) => {
-  const port = 28015 + process.pid
+  const offset = process.pid % (65535 - 28015)
+  const port = 28015 + offset
   const r = require('rethinkdb')
 
   r.net.Connection.prototype.DEFAULT_PORT = port
-  rethink = spawn('rethinkdb', ['-o', `${process.pid}`, '-d', `${process.cwd()}/.db-test-${port}`])
+  rethink = spawn('rethinkdb', ['-o', `${offset}`, '-d', `${process.cwd()}/.db-test-${port}`])
+
+  if (process.env.AVA_RETHINKDB_DEBUG) {
+    console.error(`==> Process ${process.pid} spawning RethinkDB server on port ${port}...`)
+  }
 
   rethink.stdout.on('data', chunk => {
-    if (chunk.toString('utf8').startsWith('Server ready')) {
+    if (chunk.toString('utf8').startsWith('Listening for client driver connections')) {
       if (initialData) {
         importData().then(() => resolve(port))
       } else {
         resolve(port)
       }
+
+      if (process.env.AVA_RETHINKDB_DEBUG) {
+        console.error(`==> Process ${process.pid} RethinkDB server booted!`)
+      }
+    }
+
+    if (process.env.AVA_RETHINKDB_DEBUG) {
+      console.error(chunk.toString())
     }
   })
+
+  if (process.env.AVA_RETHINKDB_DEBUG) {
+    rethink.stderr.on('data', chunk => console.error(chunk.toString()))
+  }
 
   rethink.on('error', reject)
 
@@ -40,7 +57,16 @@ module.exports.init = initialData => t => new Promise((resolve, reject) => {
 })
 
 module.exports.cleanup = () => {
+  if (process.env.AVA_RETHINKDB_DEBUG) {
+    console.error(`==> Process ${process.pid} killing RethinkDB server...`)
+  }
+
   rethink.kill()
+
+  if (process.env.AVA_RETHINKDB_DEBUG) {
+    console.error(`==> Process ${process.pid} killed RethinkDB server!`)
+  }
+
   rimraf.sync(`${process.cwd()}/.db-test-*`)
 }
 
