@@ -13,7 +13,12 @@ const TEST_DATA = {
     data: [
       { something: true }
     ]
-  }
+  },
+  test: {
+    data: [
+      { something: true },
+    ],
+  },
 }
 
 test.before('Initialize DB', init(TEST_DATA))
@@ -34,6 +39,7 @@ shouldDatabaseExist.title = (_, input, expected) => `Database ${input} should${e
 
 test(shouldDatabaseExist, 'fp', true)
 test(shouldDatabaseExist, 'meta', true)
+test(shouldDatabaseExist, 'test', true)
 test(shouldDatabaseExist, 'sugar', false)
 
 async function shouldUserExist (t, name, expected) {

@@ -45,7 +45,7 @@ module.exports.init = initialData => t => new Promise((resolve, reject) => {
     let conn
     return r.connect({}).then(_ => { conn = _ })
       .then(() => Promise.all(
-        Object.keys(initialData).map(db => r.dbCreate(db).run(conn))
+        Object.keys(initialData).map(db => db !== 'test' && r.dbCreate(db).run(conn))
       ))
       .then(() => Promise.all(
         collectTables(initialData).map(([db, table]) => r.db(db).tableCreate(table).run(conn))
