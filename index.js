@@ -3,10 +3,15 @@
 const { spawn } = require('child_process')
 const rimraf = require('rimraf')
 
+const getPortOffset = pid => {
+  const maxOffset = 65535 - 28015
+  return pid - (Math.floor(pid / maxOffset) * maxOffset)
+}
+
 let rethink
 
 module.exports.init = initialData => t => new Promise((resolve, reject) => {
-  const offset = process.pid % (65535 - 28015)
+  const offset = getPortOffset(process.pid)
   const port = 28015 + offset
   const r = require('rethinkdb')
 
@@ -82,3 +87,5 @@ function collectDocuments (data) {
                .reduce((a, b) => a.concat(b))
                .reduce((a, b) => a.concat(b))
 }
+
+module.exports.getPortOffset = getPortOffset
