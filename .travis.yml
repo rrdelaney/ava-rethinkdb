@@ -1,0 +1,12 @@
+language: node_js
+
+node_js:
+  - 6
+  - 8
+
+env:
+  - AVA_VERSION=0.15.2
+  - AVA_VERSION=0.21.0
+
+before_script:
+  - npm install ava@$AVA_VERSION
