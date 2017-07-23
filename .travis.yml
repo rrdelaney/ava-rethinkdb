@@ -1,5 +1,12 @@
 language: node_js
 
+addons:
+  apt:
+    packages:
+      - rethinkdb
+    sources:
+      - sourceline: 'deb http://download.rethinkdb.com/apt precise main'
+
 node_js:
   - 6
   - 8
