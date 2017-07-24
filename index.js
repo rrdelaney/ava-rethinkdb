@@ -2,11 +2,14 @@
 
 const { spawn } = require('child_process')
 const rimraf = require('rimraf')
+const mkdirp = require('mkdirp')
 
 const getPortOffset = pid => {
   const maxOffset = 65535 - 28015
   return pid - (Math.floor(pid / maxOffset) * maxOffset)
 }
+
+const getStorageDir = (cwd, pid) => `${cwd}/.db-test-${pid}`
 
 let rethink
 
@@ -14,9 +17,11 @@ module.exports.init = initialData => t => new Promise((resolve, reject) => {
   const offset = getPortOffset(process.pid)
   const port = 28015 + offset
   const r = require('rethinkdb')
+  const dir = getStorageDir(process.cwd(), process.pid)
 
   r.net.Connection.prototype.DEFAULT_PORT = port
-  rethink = spawn('rethinkdb', ['-o', `${offset}`, '-d', `${process.cwd()}/.db-test-${port}`])
+  mkdirp.sync(dir)
+  rethink = spawn('rethinkdb', ['-o', `${offset}`, '-d', `${dir}/${port}`])
 
   if (process.env.AVA_RETHINKDB_DEBUG) {
     console.error(`==> Process ${process.pid} spawning RethinkDB server on port ${port}...`)
@@ -72,7 +77,7 @@ module.exports.cleanup = () => {
     console.error(`==> Process ${process.pid} killed RethinkDB server!`)
   }
 
-  rimraf.sync(`${process.cwd()}/.db-test-*`)
+  rimraf.sync(getStorageDir(process.cwd(), process.pid))
 }
 
 function collectTables (data) {
