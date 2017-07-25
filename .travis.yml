@@ -1,0 +1,19 @@
+language: node_js
+
+addons:
+  apt:
+    packages:
+      - rethinkdb
+    sources:
+      - sourceline: 'deb http://download.rethinkdb.com/apt precise main'
+
+node_js:
+  - 6
+  - 8
+
+env:
+  - AVA_VERSION=0.15.2
+  - AVA_VERSION=0.21.0
+
+before_script:
+  - npm install ava@$AVA_VERSION
