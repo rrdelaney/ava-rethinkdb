@@ -12,4 +12,4 @@ test('port offsets shouldn\'t exceed the maximum offset', async t => {
   t.true(getPortOffset(maxOffset) <= maxOffset)
   t.true(getPortOffset(maxOffset * 2) <= maxOffset)
   t.true(getPortOffset(maxOffset * 2.5) <= maxOffset)
-});
+})
