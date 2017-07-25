@@ -10,10 +10,7 @@
     "type": "git",
     "url": "https://github.com/rrdelaney/ava-rethinkdb"
   },
-  "keywords": [
-    "ava",
-    "rethinkdb"
-  ],
+  "keywords": ["ava", "rethinkdb"],
   "author": "Ryan Delaney <rrdelaney@outlook.com>",
   "license": "MIT",
   "bugs": {
@@ -22,6 +19,7 @@
   "homepage": "https://github.com/rrdelaney/ava-rethinkdb",
   "devDependencies": {
     "ava": "^0.15.2",
+    "babel-eslint": "^7.2.3",
     "rethinkdb": "^2.3.2",
     "snazzy": "^4.0.0",
     "standard": "^7.1.2"
@@ -30,8 +28,6 @@
     "rimraf": "^2.5.2"
   },
   "standard": {
-    "ignore": [
-      "test"
-    ]
+    "parser": "babel-eslint"
   }
 }

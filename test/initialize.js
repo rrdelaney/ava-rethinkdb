@@ -16,9 +16,9 @@ const TEST_DATA = {
   },
   test: {
     data: [
-      { something: true },
-    ],
-  },
+      { something: true }
+    ]
+  }
 }
 
 test.before('Initialize DB', init(TEST_DATA))
