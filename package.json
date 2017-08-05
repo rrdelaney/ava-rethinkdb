@@ -20,6 +20,9 @@
     "url": "https://github.com/rrdelaney/ava-rethinkdb/issues"
   },
   "homepage": "https://github.com/rrdelaney/ava-rethinkdb",
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "peerDependencies": {
     "ava": "^0.21.0 || <= 0.21.0"
   },
