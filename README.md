@@ -1,5 +1,9 @@
 # Testing utilities for RethinkDB and AVA
 
+[![ava-rethinkdb on NPM](https://img.shields.io/npm/v/npm.svg)](https://npm.im/ava-rethinkdb)
+[![Build Status](https://travis-ci.org/rrdelaney/ava-rethinkdb.svg?branch=master)](https://travis-ci.org/rrdelaney/ava-rethinkdb)
+![See package.json for Node.js Support](https://img.shields.io/node/v/ava-rethinkdb.svg?label=Runs%20on%20Node.js)
+
 ```
 npm install --save-dev ava-rethinkdb
 ```
