@@ -34,8 +34,13 @@
     "standard": "^7.1.2"
   },
   "dependencies": {
+    "lodash.filter": "^4.6.0",
+    "lodash.flatmap": "^4.5.0",
+    "lodash.map": "^4.6.0",
     "mkdirp": "^0.5.1",
-    "rimraf": "^2.5.2"
+    "rimraf": "^2.5.2",
+    "rmfr": "^1.0.3",
+    "tmp-promise": "^1.0.3"
   },
   "standard": {
     "parser": "babel-eslint"
